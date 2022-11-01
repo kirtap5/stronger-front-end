@@ -1,3 +1,4 @@
+import React from "react";
 import { colors } from "../assets/colors";
 import { TfiPlus } from "react-icons/tfi";
 import { IconContext } from "react-icons";
@@ -6,16 +7,26 @@ interface BigRoundButtonProps {
   disabled: Boolean;
 }
 
-export const BigRoundButton = ({ disabled }: BigRoundButtonProps) => {
+interface name {
+  [key: string]: React.CSSProperties;
+}
+
+const styles: Record<string, React.CSSProperties> = {
+  root: {
+    width: "75px",
+    height: "75px",
+    borderRadius: "50%",
+    transform: "translateY(-25px)",
+    position: "relative",
+  },
+};
+
+export const BigRoundButton: React.FC<BigRoundButtonProps> = ({ disabled }) => {
   return (
     <div
       style={{
-        width: "75px",
-        height: "75px",
-        borderRadius: "50%",
+        ...styles.root,
         backgroundColor: disabled ? colors.grey : colors.primary,
-        transform: "translateY(-25px)",
-        position: "relative",
       }}
     >
       <IconContext.Provider

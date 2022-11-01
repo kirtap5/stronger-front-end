@@ -1,18 +1,19 @@
+import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import CSS from "csstype";
 import { BigRoundButton } from "../components/BigRoundButton";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsBarChart } from "react-icons/bs";
 import { colors } from "../assets/colors";
+import { StyleType } from "../typescript/types/Types";
 
 interface LayoutProps {
   iconSize: number;
 }
 
-export const Layout = ({ iconSize }: LayoutProps) => {
+export const Layout: React.FC<LayoutProps> = ({ iconSize }) => {
   return (
     <>
-      <nav style={navStyle}>
+      <nav style={styles.root}>
         <NavLink to="/" end>
           {({ isActive }) => (
             <AiOutlineHome
@@ -44,17 +45,15 @@ export const Layout = ({ iconSize }: LayoutProps) => {
   );
 };
 
-const navStyle: CSS.Properties = {
-  position: "absolute",
-  bottom: "0",
-  width: "100%",
-  height: "50px",
-  boxShadow: `1px 1px 8px ${colors.grey}`,
-  display: "flex",
-  justifyContent: "space-around",
-  alignItems: "center",
-};
-
-const iconStyle: CSS.Properties = {
-  color: colors.black,
+const styles: StyleType = {
+  root: {
+    position: "absolute",
+    bottom: "0",
+    width: "100%",
+    height: "50px",
+    boxShadow: `1px 1px 8px ${colors.grey}`,
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
 };
