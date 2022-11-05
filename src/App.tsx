@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
-import { CreateWorkout } from "./pages/CreateWorkout";
+import { CreateWorkout } from "./pages/manageWorkout/CreateWorkout";
 import { Statistics } from "./pages/Statistics";
 
 export default function App() {

@@ -5,6 +5,7 @@ import { StyleType } from "../typescript/types/Types";
 import { colors } from "../assets/colors";
 
 export const HeaderSection = () => {
+  // TODO: implement a date library
   const date = new Date();
   const day = date.toLocaleString("en-GB", { day: "numeric" });
   const month = date.toLocaleString("en-GB", { month: "short" });
@@ -29,11 +30,10 @@ export const HeaderSection = () => {
 };
 
 const styles: StyleType = {
-  root: { padding: "0px 20px" },
+  root: {},
   iconContainer: {
     display: "flex",
     justifyContent: "space-between",
-    width: "100%",
     margin: " 20px auto",
   },
   contentContainer: {
