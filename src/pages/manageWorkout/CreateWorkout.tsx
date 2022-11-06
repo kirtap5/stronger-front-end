@@ -73,28 +73,6 @@ export const CreateWorkout = () => {
             );
           }
         )}
-        {/* 
-        
-        <MuscleCard
-          path={legs}
-          caption="Legs"
-          highlightColor={colors.secondary}
-        />
-        <MuscleCard
-          path={biceps}
-          caption="Arms"
-          highlightColor={colors.secondary}
-        />
-        <MuscleCard
-          path={shoulders}
-          caption="Shoulders"
-          highlightColor={colors.secondary}
-        />
-        <MuscleCard
-          path={abs}
-          caption="Abs"
-          highlightColor={colors.secondary}
-        /> */}
       </div>
       <PrimaryButton value="Start Workout" />
     </div>
