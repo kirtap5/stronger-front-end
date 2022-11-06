@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { colors } from "../assets/colors";
 import { ClickEventType, StyleType } from "../typescript/types/Types";
 
@@ -12,8 +12,17 @@ const handleClick = (event: ClickEventType) => {
 };
 
 export const PrimaryButton: React.FC<PrimaryButtonProps> = ({ value }) => {
+  const [over, setOver] = useState(false);
   return (
-    <button style={styles.root} onClick={handleClick}>
+    <button
+      style={{
+        ...styles.root,
+        transform: over ? "scale(0.9)" : "scale(1)",
+      }}
+      onClick={handleClick}
+      onMouseOver={() => setOver(true)}
+      onMouseOut={() => setOver(false)}
+    >
       <b>{value}</b>
     </button>
   );
@@ -26,11 +35,11 @@ const styles: StyleType = {
     padding: "2px",
     border: "none",
     borderRadius: "12px",
-    backgroundColor: colors.primary,
     color: colors.white,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     margin: "auto",
+    backgroundColor: colors.primary,
   },
 };
