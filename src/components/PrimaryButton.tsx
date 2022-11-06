@@ -13,9 +13,9 @@ const handleClick = (event: ClickEventType) => {
 
 export const PrimaryButton: React.FC<PrimaryButtonProps> = ({ value }) => {
   return (
-    <div style={styles.root} onClick={handleClick}>
-      <h5>{value}</h5>
-    </div>
+    <button style={styles.root} onClick={handleClick}>
+      <b>{value}</b>
+    </button>
   );
 };
 
@@ -24,6 +24,7 @@ const styles: StyleType = {
     width: "170px",
     height: "50px",
     padding: "2px",
+    border: "none",
     borderRadius: "12px",
     backgroundColor: colors.primary,
     color: colors.white,
