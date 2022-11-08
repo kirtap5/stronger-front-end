@@ -18,7 +18,7 @@ type muscleDataType = {
   highlightColor: string;
 };
 
-const muscleData = [
+const muscleData: muscleDataType[] = [
   {
     id: 1,
     path: chest,
@@ -61,18 +61,16 @@ export const CreateWorkout = () => {
     <div style={styles.root}>
       <HeaderSection />
       <div style={styles.cardContainer}>
-        {muscleData.map(
-          ({ id, path, caption, highlightColor }: muscleDataType) => {
-            return (
-              <MuscleCard
-                key={id}
-                path={path}
-                caption={caption}
-                highlightColor={highlightColor}
-              />
-            );
-          }
-        )}
+        {muscleData.map(({ id, path, caption, highlightColor }) => {
+          return (
+            <MuscleCard
+              key={id}
+              path={path}
+              caption={caption}
+              highlightColor={highlightColor}
+            />
+          );
+        })}
       </div>
       <PrimaryButton value="Start Workout" />
     </div>
