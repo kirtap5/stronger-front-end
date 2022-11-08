@@ -47,7 +47,7 @@ export const Layout: React.FC<LayoutProps> = ({ iconSize }) => {
 
 const styles: StyleType = {
   root: {
-    position: "absolute",
+    position: "fixed",
     bottom: "0",
     width: "100%",
     height: "50px",
@@ -55,5 +55,7 @@ const styles: StyleType = {
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
+    backgroundColor: colors.white,
+    zIndex: "1",
   },
 };
