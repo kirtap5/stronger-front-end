@@ -5,4 +5,5 @@ export const colors = {
   black: "#1E1E1E",
   grey: "#B9B9B9",
   lightGrey: "#F4F4F7",
+  backDrop: "#1E1E1E90",
 };
