@@ -1,7 +1,7 @@
 import React from "react";
 import { colors } from "../../assets/colors";
 import { HeaderSection } from "../../components/HeaderSection";
-import { StyleType } from "../../typescript/types/Types";
+import { ClickEventType, StyleType } from "../../typescript/types/Types";
 import { MuscleCard } from "./MuscleCard";
 import abs from "../../assets/images/abs.png";
 import arms from "../../assets/images/arms.png";
@@ -10,6 +10,8 @@ import shoulders from "../../assets/images/shoulders.png";
 import chest from "../../assets/images/chest.png";
 import legs from "../../assets/images/legs.png";
 import { PrimaryButton } from "../../components/PrimaryButton";
+import { useNavigate } from "react-router-dom";
+import { ROUTE_PATHS } from "../../routes";
 
 type muscleDataType = {
   id?: number;
@@ -56,7 +58,15 @@ const muscleData: muscleDataType[] = [
     highlightColor: colors.secondary,
   },
 ];
+
 export const CreateWorkout = () => {
+  const navigate = useNavigate();
+
+  const handleStartWorkout = (event: ClickEventType) => {
+    console.log("sjk");
+    navigate(ROUTE_PATHS.ADD_EXERCISE);
+  };
+
   return (
     <div style={styles.root}>
       <HeaderSection />
@@ -72,7 +82,7 @@ export const CreateWorkout = () => {
           );
         })}
       </div>
-      <PrimaryButton value="Start Workout" />
+      <PrimaryButton value="Start Workout" handleClick={handleStartWorkout} />
     </div>
   );
 };

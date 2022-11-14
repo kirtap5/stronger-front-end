@@ -13,14 +13,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout iconSize={30} />}>
           <Route index element={<Home />}></Route>
-          {/* <Route
-            path={ROUTE_PATHS.CREATE_WORKOUT}
-            element={<CreateWorkout />}
-          ></Route> */}
-          <Route
-            path={ROUTE_PATHS.CREATE_WORKOUT}
-            element={<AddExercises />}
-          ></Route>
+          <Route path={ROUTE_PATHS.CREATE_WORKOUT} element={<CreateWorkout />}>
+            <Route path={ROUTE_PATHS.ADD_EXERCISE} element={<AddExercises />} />
+          </Route>
 
           <Route path={ROUTE_PATHS.STATISTICS} element={<Statistics />}></Route>
         </Route>
