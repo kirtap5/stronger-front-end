@@ -63,13 +63,16 @@ export const CreateWorkout = () => {
   const navigate = useNavigate();
 
   const handleStartWorkout = (event: ClickEventType) => {
-    console.log("sjk");
-    navigate(ROUTE_PATHS.ADD_EXERCISE);
+    navigate(`/${ROUTE_PATHS.ADD_EXERCISE}`);
   };
 
   return (
     <div style={styles.root}>
-      <HeaderSection />
+      <HeaderSection
+        starter="What are"
+        highlight="you"
+        ending="training today?"
+      />
       <div style={styles.cardContainer}>
         {muscleData.map(({ id, path, caption, highlightColor }) => {
           return (

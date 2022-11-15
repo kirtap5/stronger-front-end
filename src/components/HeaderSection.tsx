@@ -5,7 +5,17 @@ import { StyleType } from "../typescript/types/Types";
 import { colors } from "../assets/colors";
 import { DateDisplay } from "./DateDisplay";
 
-export const HeaderSection = () => {
+interface HeaderSectionProps {
+  starter: string;
+  highlight: string;
+  ending: string;
+}
+
+export const HeaderSection: React.FC<HeaderSectionProps> = ({
+  starter,
+  highlight,
+  ending,
+}) => {
   return (
     <div style={styles.root}>
       <div style={styles.iconContainer}>
@@ -14,7 +24,7 @@ export const HeaderSection = () => {
       </div>
       <div style={styles.contentContainer}>
         <h2 style={styles.textContainer}>
-          What are <span style={styles.highlight}>you</span> training today?
+          {starter} <span style={styles.highlight}>{highlight}</span> {ending}
         </h2>
         <DateDisplay />
       </div>
