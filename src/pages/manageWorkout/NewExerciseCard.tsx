@@ -1,10 +1,16 @@
 import React from "react";
 import { colors } from "../../assets/colors";
-import { StyleType } from "../../typescript/types/Types";
+import { ClickEventType, StyleType } from "../../typescript/types/Types";
 import { BiPlus } from "react-icons/bi";
-export const NewExerciseCard = () => {
+
+interface NewExerciseCardProps {
+  handleClick: (event: ClickEventType) => void;
+}
+export const NewExerciseCard: React.FC<NewExerciseCardProps> = ({
+  handleClick,
+}) => {
   return (
-    <button style={styles.root}>
+    <button style={styles.root} onClick={handleClick}>
       <small style={styles.highlightText}>Select</small>
       <small style={styles.date}>3:17 PM</small>
       <b style={styles.caption}>Select a new exersice...</b>

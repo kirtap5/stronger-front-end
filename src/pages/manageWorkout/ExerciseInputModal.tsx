@@ -1,11 +1,20 @@
 import React from "react";
 import { colors } from "../../assets/colors";
 import { DateDisplay } from "../../components/DateDisplay";
-import { StyleType } from "../../typescript/types/Types";
-export const ExersiceInputModal = () => {
+import { ClickEventType, StyleType } from "../../typescript/types/Types";
+
+interface ExerciseInputModalProps {
+  closeModal: (event: ClickEventType) => void;
+}
+export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
+  closeModal,
+}) => {
   return (
-    <div style={styles.root}>
-      <div style={styles.container}>
+    <div style={styles.root} onClick={closeModal}>
+      <div
+        style={styles.container}
+        onClick={(event: ClickEventType) => event.stopPropagation()}
+      >
         <div style={styles.header}>
           <div style={styles.captionContainer}>
             <div>
