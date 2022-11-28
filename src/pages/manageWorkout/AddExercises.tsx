@@ -5,7 +5,15 @@ import { ExersiceInputModal } from "./ExerciseInputModal";
 import { ExersiceCard } from "./ExersiceCard";
 import { NewExerciseCard } from "./NewExerciseCard";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+
 export const AddExercises = () => {
+  //todo: fetch the exercises and display them instead.
+  const categories = useSelector(
+    (state: RootState) => state.workout.categories
+  );
+
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = (event: ClickEventType) => {
