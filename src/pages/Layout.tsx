@@ -5,6 +5,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BsBarChart } from "react-icons/bs";
 import { colors } from "../assets/colors";
 import { StyleType } from "../typescript/types/Types";
+import { ROUTE_PATHS } from "../routes";
 
 interface LayoutProps {
   iconSize: number;
@@ -25,11 +26,11 @@ export const Layout: React.FC<LayoutProps> = ({ iconSize }) => {
           )}
         </NavLink>
 
-        <NavLink to="/createWorkout">
+        <NavLink to={ROUTE_PATHS.CREATE_WORKOUT}>
           {({ isActive }) => <BigRoundButton disabled={isActive} />}
         </NavLink>
 
-        <NavLink to="/statistics">
+        <NavLink to={ROUTE_PATHS.STATISTICS}>
           {({ isActive }) => (
             <BsBarChart
               size={iconSize}

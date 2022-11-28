@@ -4,14 +4,13 @@ import { ClickEventType, StyleType } from "../typescript/types/Types";
 
 interface PrimaryButtonProps {
   value: string;
+  handleClick: (event: ClickEventType) => void;
 }
 
-const handleClick = (event: ClickEventType) => {
-  //TODO: insert click logic here.
-  console.log("clicked!");
-};
-
-export const PrimaryButton: React.FC<PrimaryButtonProps> = ({ value }) => {
+export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
+  value,
+  handleClick,
+}) => {
   const [over, setOver] = useState(false);
   return (
     <button
