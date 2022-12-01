@@ -2,6 +2,15 @@ import React from "react";
 import { colors } from "../../assets/colors";
 import { DateDisplay } from "../../components/DateDisplay";
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
+import Select from "react-select";
+import { SelectDropdown } from "../../components/SelectDropdown";
+import { RepSelection } from "./RepSelection";
+import { WeightSelection } from "./WeightSelection";
+const options = [
+  { value: "chocolate", label: "Chocolate" },
+  { value: "strawberry", label: "Strawberry" },
+  { value: "vanilla", label: "Vanilla" },
+];
 
 interface ExerciseInputModalProps {
   closeModal: (event: ClickEventType) => void;
@@ -25,6 +34,9 @@ export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
           </div>
           <DateDisplay />
         </div>
+        <SelectDropdown />
+        <RepSelection />
+        <WeightSelection />
       </div>
     </div>
   );
