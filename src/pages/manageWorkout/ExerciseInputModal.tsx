@@ -55,12 +55,12 @@ const styles: StyleType = {
     zIndex: "2",
   },
   container: {
-    width: "90%",
+    width: "80%",
     height: "90%",
     backgroundColor: colors.white,
     borderRadius: "20px",
     margin: "auto",
-    padding: "20px 0",
+    padding: "20px",
   },
   header: {
     margin: "auto",
