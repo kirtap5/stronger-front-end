@@ -1,4 +1,3 @@
-import React from "react";
 import { colors } from "../../assets/colors";
 import { HeaderSection } from "../../components/HeaderSection";
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
@@ -13,51 +12,18 @@ import { PrimaryButton } from "../../components/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "../../routes";
 
-type muscleDataType = {
-  id?: number;
-  path: string;
-  caption: string;
-  highlightColor: string;
-};
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
-const muscleData: muscleDataType[] = [
-  {
-    id: 1,
-    path: chest,
-    caption: "Chest",
-    highlightColor: colors.secondary,
-  },
-  {
-    id: 2,
-    path: back,
-    caption: "Back",
-    highlightColor: colors.secondary,
-  },
-  {
-    id: 3,
-    path: legs,
-    caption: "Legs",
-    highlightColor: colors.secondary,
-  },
-  {
-    id: 4,
-    path: arms,
-    caption: "Arms",
-    highlightColor: colors.secondary,
-  },
-  {
-    id: 5,
-    path: shoulders,
-    caption: "Shoulders",
-    highlightColor: colors.secondary,
-  },
-  {
-    id: 6,
-    path: abs,
-    caption: "Abs",
-    highlightColor: colors.secondary,
-  },
-];
+//TODO, fixa snyggare lösning för illustrations. Ha dom i databasen ksk?
+const illustrations: any = {
+  ABS: abs,
+  ARMS: arms,
+  BACK: back,
+  SHOULDERS: shoulders,
+  CHEST: chest,
+  LEGS: legs,
+};
 
 export const CreateWorkout = () => {
   const navigate = useNavigate();
@@ -66,21 +32,28 @@ export const CreateWorkout = () => {
     navigate(`/${ROUTE_PATHS.ADD_EXERCISE}`);
   };
 
+  const categories = useSelector(
+    (state: RootState) => state.workout.categories
+  );
+
   return (
     <div style={styles.root}>
+      <h1 style={{ textTransform: "capitalize" }}>
+        {categories[2].name.toLowerCase()}
+      </h1>
       <HeaderSection
         starter="What are"
         highlight="you"
         ending="training today?"
       />
       <div style={styles.cardContainer}>
-        {muscleData.map(({ id, path, caption, highlightColor }) => {
+        {categories.map(({ id, name }) => {
           return (
             <MuscleCard
               key={id}
-              path={path}
-              caption={caption}
-              highlightColor={highlightColor}
+              path={illustrations[name]}
+              caption={name.toLowerCase()}
+              highlightColor={colors.secondary}
             />
           );
         })}

@@ -25,7 +25,7 @@ export const MuscleCard: React.FC<MuscleCardProps> = ({
         setIsActive(!isActive)
       }
     >
-      <img src={path} alt="Image not found" style={styles.illustration}></img>
+      <img src={path} alt="img not found" style={styles.illustration}></img>
       <h3
         style={{
           ...styles.caption,
@@ -65,6 +65,7 @@ const styles: StyleType = {
   caption: {
     marginBottom: "10px",
     marginRight: "10px",
+    textTransform: "capitalize",
   },
   checkmark: {
     width: "30px",
