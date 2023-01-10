@@ -48,11 +48,11 @@ export const initialStateMock = {
       exercises: [
         {
           id: 1,
-          name: "Flat Barbell Bench Press",
+          name: "Flat Barbell Bench Pres",
         },
         {
           id: 2,
-          name: "Incline Dumbbell Bench Press",
+          name: "Incline Dumbbell Bench Pres",
         },
       ],
     },
@@ -76,13 +76,14 @@ export const initialStateMock = {
       exercises: [
         {
           id: 1,
-          name: "Flat Barbell Bench Press",
+          name: "Flat Barbell Bench Prss",
         },
         {
           id: 2,
-          name: "Incline Dumbbell Bench Press",
+          name: "Incline Dumbbell Bench Prss",
         },
       ],
     },
   ],
+  selectedCategories: [],
 };

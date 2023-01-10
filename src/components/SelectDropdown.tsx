@@ -1,70 +1,61 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Select from "react-select";
 import { colors } from "../assets/colors";
+import { RootState } from "../redux/store";
 import { StyleType } from "../typescript/types/Types";
 
-interface ColourOption {
-  readonly value: string;
-  readonly label: string;
-  readonly color: string;
-  readonly isDisabled?: boolean;
+interface CategoryOption {
+  name: string;
+  options: ExerciseOption[];
+}
+interface ExerciseOption {
+  id: number;
+  name: string;
+  value: string;
 }
 
-const colourOptions: readonly ColourOption[] = [
-  { value: "ocean", label: "Ocean", color: "#00B8D9" },
-  { value: "blue", label: "Blue", color: "#0052CC", isDisabled: true },
-  { value: "purple", label: "Purple", color: "#5243AA" },
-  { value: "red", label: "Red", color: "#FF5630" },
-  { value: "orange", label: "Orange", color: "#FF8B00" },
-  { value: "yellow", label: "Yellow", color: "#FFC400" },
-  { value: "green", label: "Green", color: "#36B37E" },
-  { value: "forest", label: "Forest", color: "#00875A" },
-  { value: "slate", label: "Slate", color: "#253858" },
-  { value: "silver", label: "Silver", color: "#666666" },
-];
-
-interface FlavourOption {
-  readonly value: string;
-  readonly label: string;
-  readonly rating: string;
-}
-
-const flavourOptions: readonly FlavourOption[] = [
-  { value: "vanilla", label: "Vanilla", rating: "safe" },
-  { value: "chocolate", label: "Chocolate", rating: "good" },
-  { value: "strawberry", label: "Strawberry", rating: "wild" },
-  { value: "salted-caramel", label: "Salted Caramel", rating: "crazy" },
-];
-
-interface GroupedOption {
-  readonly label: string;
-  readonly options: readonly ColourOption[] | readonly FlavourOption[];
-}
-
-const groupedOptions: readonly GroupedOption[] = [
-  {
-    label: "Colours",
-    options: colourOptions,
-  },
-  {
-    label: "Flavours",
-    options: flavourOptions,
-  },
-];
-
-const formatGroupLabel = (data: GroupedOption) => (
+const formatGroupLabel = (data: CategoryOption) => (
   <div style={styles.groupStyles}>
-    <span>{data.label}</span>
+    <span>{data.name}</span>
     <span style={styles.groupBadgeStyles}>{data.options.length}</span>
   </div>
 );
 
 export const SelectDropdown = () => {
+  const [categoryOptions, setCategoryOptions] = useState<CategoryOption[]>();
+
+  const categories = useSelector(
+    (state: RootState) => state.workout.categories
+  );
+  const selectedCategories = useSelector(
+    (state: RootState) => state.workout.selectedCategories
+  );
+  useEffect(() => {
+    const formattedCategoryOptions: CategoryOption[] = [];
+    selectedCategories.forEach((category) => {
+      categories.forEach((chosenCategory) => {
+        if (category.toUpperCase() == chosenCategory.name) {
+          formattedCategoryOptions.push({
+            name: category,
+            options: chosenCategory.exercises.map((exercise) => ({
+              ...exercise,
+              label: exercise.name,
+              value: exercise.name,
+              // TODO: value: String(exercise.id),
+            })),
+          });
+        }
+      });
+    });
+    setCategoryOptions(formattedCategoryOptions);
+  }, []);
+
   return (
     <div style={styles.root}>
-      <Select<ColourOption | FlavourOption, false, GroupedOption>
+      <Select<ExerciseOption, false, CategoryOption>
         defaultValue={null}
-        options={groupedOptions}
+        options={categoryOptions}
         formatGroupLabel={formatGroupLabel}
         theme={(theme) => ({
           ...theme,

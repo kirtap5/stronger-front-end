@@ -2,15 +2,11 @@ import React from "react";
 import { colors } from "../../assets/colors";
 import { DateDisplay } from "../../components/DateDisplay";
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
-import Select from "react-select";
 import { SelectDropdown } from "../../components/SelectDropdown";
 import { RepSelection } from "./RepSelection";
 import { WeightSelection } from "./WeightSelection";
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface ExerciseInputModalProps {
   closeModal: (event: ClickEventType) => void;
@@ -18,6 +14,8 @@ interface ExerciseInputModalProps {
 export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
   closeModal,
 }) => {
+  const exercises = useSelector((state: RootState) => state.workout.categories);
+  console.log(exercises);
   return (
     <div style={styles.root} onClick={closeModal}>
       <div
