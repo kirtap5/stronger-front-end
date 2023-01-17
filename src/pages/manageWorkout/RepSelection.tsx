@@ -7,8 +7,23 @@ export const RepSelection = () => {
       <small style={{ ...styles.leftTitle, ...styles.title }}>Sets</small>
       <small style={{ ...styles.rightTitle, ...styles.title }}>Reps</small>
       {/* Todo: insert inputs for the numers. Skicka upp vald value onChange?*/}
-      <div style={{ ...styles.leftField, ...styles.field }}>4</div>
-      <div style={{ ...styles.rightField, ...styles.field }}>10</div>
+      <div style={{ ...styles.leftField, ...styles.field }}>
+        <input
+          type="number"
+          inputMode="numeric"
+          defaultValue="3"
+          style={styles.numberInput}
+        />
+      </div>
+
+      <div style={{ ...styles.rightField, ...styles.field }}>
+        <input
+          type="number"
+          inputMode="numeric"
+          defaultValue="6"
+          style={styles.numberInput}
+        />
+      </div>
     </div>
   );
 };
@@ -53,5 +68,17 @@ const styles: StyleType = {
   },
   rightField: {
     gridArea: "RightField",
+  },
+  numberInput: {
+    all: "unset",
+    textDecoration: "none",
+    fontWeight: "500",
+    background: "none",
+    fontSize: "18px",
+    minWidth: "50%",
+    maxWidth: "100%",
+    textAlign: "center",
+    borderRadius: "10px",
+    border: `1px solid ${colors.lightGrey}`,
   },
 };
