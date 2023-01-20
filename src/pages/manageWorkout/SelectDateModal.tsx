@@ -1,17 +1,14 @@
 import React from "react";
 import { colors } from "../../assets/colors";
-import { DateDisplay } from "../../components/DateDisplay";
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
-import { SelectDropdown } from "../../components/SelectDropdown";
-import { RepSelection } from "./RepSelection";
-import { WeightSelection } from "./WeightSelection";
+import { DateDisplay } from "../../components/DateDisplay";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-interface ExerciseInputModalProps {
+interface SelectDateModalProps {
   closeModal: (event: ClickEventType) => void;
 }
-export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
+export const SelectDateModal: React.FC<SelectDateModalProps> = ({
   closeModal,
 }) => {
   const exercises = useSelector((state: RootState) => state.workout.categories);
@@ -24,17 +21,15 @@ export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
       >
         <div style={styles.header}>
           <div style={styles.captionContainer}>
-            <div>
-              <h2 style={styles.caption}>Chest</h2>
-              <b style={styles.highlight}>and</b>
-            </div>
-            <h2 style={styles.caption}>Triceps</h2>
+            <h2 style={styles.caption}>
+              When is
+              <span style={styles.highlight}>your</span>
+              <br />
+              Workout ?
+            </h2>
           </div>
           <DateDisplay />
         </div>
-        <SelectDropdown />
-        <RepSelection />
-        <WeightSelection />
       </div>
     </div>
   );
@@ -61,14 +56,14 @@ const styles: StyleType = {
     padding: "20px",
   },
   header: {
+    marginTop: "30px",
     margin: "auto",
     display: "flex",
     justifyContent: "space-around",
   },
 
   captionContainer: {
-    marginTop: "30px",
-    maxWidth: "40%",
+    maxWidth: "60%",
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",

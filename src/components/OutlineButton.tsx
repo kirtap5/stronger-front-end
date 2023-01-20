@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { colors } from "../assets/colors";
 import { ClickEventType, StyleType } from "../typescript/types/Types";
 
-interface PrimaryButtonProps {
+interface OutlineButtonProps {
   value: string;
   handleClick: (event: ClickEventType) => void;
 }
 
-export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
+export const OutlineButton: React.FC<OutlineButtonProps> = ({
   value,
   handleClick,
 }) => {
@@ -32,14 +32,15 @@ const styles: StyleType = {
     width: "170px",
     height: "50px",
     padding: "2px",
-    border: "none",
     borderRadius: "12px",
-    color: colors.white,
+    color: colors.primary,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     margin: "auto",
-    backgroundColor: colors.primary,
-    marginBottom: "10px",
+    backgroundColor: colors.white,
+    border: `2px solid ${colors.primary}`,
+    marginTop: "10px",
+    marginBottom: "100px",
   },
 };

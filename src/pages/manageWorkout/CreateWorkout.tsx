@@ -10,12 +10,14 @@ import shoulders from "../../assets/images/shoulders.png";
 import chest from "../../assets/images/chest.png";
 import legs from "../../assets/images/legs.png";
 import { PrimaryButton } from "../../components/PrimaryButton";
+import { OutlineButton } from "../../components/OutlineButton";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "../../routes";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { initiatedWorkout } from "../../features/workout/workoutSlice";
+import { SelectDateModal } from "./SelectDateModal";
 
 //TODO, fixa snyggare lösning för illustrations. Ha dom i databasen ksk?
 const illustrations: any = {
@@ -38,6 +40,7 @@ export const CreateWorkout = () => {
   const dispatch = useDispatch();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [showModal, setShowModal] = useState(false);
 
   const handleSelectedCategory = (name: string) => {
     let updatedCategories = [...selectedCategories];
@@ -52,6 +55,10 @@ export const CreateWorkout = () => {
   const handleStartWorkout = (event: ClickEventType) => {
     dispatch(initiatedWorkout(selectedCategories));
     navigate(`/${ROUTE_PATHS.ADD_EXERCISE}`);
+  };
+
+  const toggleModal = (event: ClickEventType) => {
+    setShowModal(!showModal);
   };
 
   return (
@@ -81,6 +88,8 @@ export const CreateWorkout = () => {
         })}
       </div>
       <PrimaryButton value="Start Workout" handleClick={handleStartWorkout} />
+      <OutlineButton value="Start Workout" handleClick={toggleModal} />
+      {showModal ? <SelectDateModal closeModal={toggleModal} /> : null}
     </div>
   );
 };
@@ -94,6 +103,6 @@ const styles: StyleType = {
     gridGap: "10px",
     gridTemplateColumns: "repeat(1, 1fr 1fr)",
     gridTemplateRows: "repeat(3, 1fr)",
-    margin: "50px auto",
+    margin: "30px auto 40px auto",
   },
 };
