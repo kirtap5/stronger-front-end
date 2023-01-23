@@ -1,18 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { colors } from "../../assets/colors";
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
 import { DateDisplay } from "../../components/DateDisplay";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import DatePicker, {
+  Calendar,
+  DayValue,
+} from "react-modern-calendar-datepicker";
+
 interface SelectDateModalProps {
-  closeModal: (event: ClickEventType) => void;
+  closeModal: () => void;
 }
+
 export const SelectDateModal: React.FC<SelectDateModalProps> = ({
   closeModal,
 }) => {
-  const exercises = useSelector((state: RootState) => state.workout.categories);
-  console.log(exercises);
+  const defaultValue = {
+    year: 2023,
+    month: 1,
+    day: 21,
+  };
+  const [day, setDay] = useState<DayValue>(defaultValue);
+  console.log("day", day);
+
+  useEffect(() => {
+    return () => {
+      document.removeEventListener("click", closeModal);
+    };
+  }, []);
+
   return (
     <div style={styles.root} onClick={closeModal}>
       <div
@@ -30,6 +49,19 @@ export const SelectDateModal: React.FC<SelectDateModalProps> = ({
           </div>
           <DateDisplay />
         </div>
+        <style>
+          {`.custom-calendar {
+        box-shadow: none;
+      }`}
+        </style>
+
+        <Calendar
+          value={day}
+          onChange={setDay}
+          colorPrimary={colors.primary}
+          calendarClassName="custom-calendar"
+          shouldHighlightWeekends
+        />
       </div>
     </div>
   );
@@ -56,8 +88,9 @@ const styles: StyleType = {
     padding: "20px",
   },
   header: {
-    marginTop: "30px",
     margin: "auto",
+    marginTop: "30px",
+
     display: "flex",
     justifyContent: "space-around",
   },

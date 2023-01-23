@@ -57,7 +57,7 @@ export const CreateWorkout = () => {
     navigate(`/${ROUTE_PATHS.ADD_EXERCISE}`);
   };
 
-  const toggleModal = (event: ClickEventType) => {
+  const toggleModal = () => {
     setShowModal(!showModal);
   };
 

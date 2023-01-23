@@ -1,4 +1,3 @@
-import React from "react";
 import { colors } from "../../assets/colors";
 import { DateDisplay } from "../../components/DateDisplay";
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
@@ -16,6 +15,7 @@ export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
 }) => {
   const exercises = useSelector((state: RootState) => state.workout.categories);
   console.log(exercises);
+
   return (
     <div style={styles.root} onClick={closeModal}>
       <div
@@ -62,12 +62,12 @@ const styles: StyleType = {
   },
   header: {
     margin: "auto",
+    marginTop: "30px",
     display: "flex",
     justifyContent: "space-around",
   },
 
   captionContainer: {
-    marginTop: "30px",
     maxWidth: "40%",
     display: "flex",
     flexDirection: "column",
