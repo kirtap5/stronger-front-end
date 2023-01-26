@@ -21,6 +21,8 @@ export const MuscleCard: React.FC<MuscleCardProps> = ({
   initState,
 }) => {
   const [isActive, setIsActive] = useState(initState);
+
+  console.log("renderrrr");
   return (
     <div
       style={{
