@@ -16,6 +16,7 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({
   highlight,
   ending,
 }) => {
+  console.log("first");
   return (
     <div style={styles.root}>
       <div style={styles.iconContainer}>
