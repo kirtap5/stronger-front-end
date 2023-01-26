@@ -93,8 +93,10 @@ export const CreateWorkout = () => {
           );
         })}
       </div>
-      <PrimaryButton value="Start Workout" handleClick={handleStartWorkout} />
-      <OutlineButton value="Start Workout" handleClick={toggleModal} />
+      <div style={styles.buttonContainer}>
+        <PrimaryButton value="Start Workout" handleClick={handleStartWorkout} />
+        <OutlineButton value="Change Date" handleClick={toggleModal} />
+      </div>
       {showModal ? (
         <SelectDateModal
           closeModal={toggleModal}
@@ -115,5 +117,10 @@ const styles: StyleType = {
     gridTemplateColumns: "repeat(1, 1fr 1fr)",
     gridTemplateRows: "repeat(3, 1fr)",
     margin: "30px auto 40px auto",
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
 };

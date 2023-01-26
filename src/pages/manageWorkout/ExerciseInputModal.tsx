@@ -6,15 +6,20 @@ import { RepSelection } from "./RepSelection";
 import { WeightSelection } from "./WeightSelection";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { PrimaryButton } from "../../components/PrimaryButton";
 
 interface ExerciseInputModalProps {
-  closeModal: (event: ClickEventType) => void;
+  closeModal: () => void;
 }
 export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
   closeModal,
 }) => {
   const exercises = useSelector((state: RootState) => state.workout.categories);
   console.log(exercises);
+
+  const handleConfirm = () => {
+    closeModal();
+  };
 
   return (
     <div style={styles.root} onClick={closeModal}>
@@ -35,6 +40,10 @@ export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
         <SelectDropdown />
         <RepSelection />
         <WeightSelection />
+
+        <div style={styles.buttonContainer}>
+          <PrimaryButton value="Confirm" handleClick={handleConfirm} />
+        </div>
       </div>
     </div>
   );
@@ -81,5 +90,11 @@ const styles: StyleType = {
   highlight: {
     color: colors.primary,
     marginLeft: "10px",
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: "80px",
+    left: "50%",
+    transform: "translateX(-50%)",
   },
 };

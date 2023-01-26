@@ -51,7 +51,9 @@ export const SelectDateModal: React.FC<SelectDateModalProps> = ({
           maxDate={maxDate}
           passSelectedDate={handleSelectedDate}
         />
-        <PrimaryButton value="Confirm" handleClick={handleConfirm} />
+        <div style={styles.buttonContainer}>
+          <PrimaryButton value="Confirm" handleClick={handleConfirm} />
+        </div>
       </div>
     </div>
   );
@@ -71,16 +73,15 @@ const styles: StyleType = {
   },
   container: {
     width: "80%",
-    height: "90%",
+    height: "80%",
     backgroundColor: colors.white,
     borderRadius: "20px",
     margin: "auto",
     padding: "20px",
+    position: "relative",
   },
   header: {
-    margin: "auto",
-    marginTop: "30px",
-
+    margin: " 40px auto",
     display: "flex",
     justifyContent: "space-around",
   },
@@ -99,5 +100,11 @@ const styles: StyleType = {
   highlight: {
     color: colors.primary,
     marginLeft: "10px",
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: "80px",
+    left: "50%",
+    transform: "translateX(-50%)",
   },
 };

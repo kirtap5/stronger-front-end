@@ -149,6 +149,7 @@ const styles: StyleType = {
     borderRadius: "7px",
     width: "320px",
     userSelect: "none",
+    margin: "40px auto",
   },
   header: {
     display: "flex",
