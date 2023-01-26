@@ -41,6 +41,7 @@ export const CreateWorkout = () => {
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const handleSelectedCategory = (name: string) => {
     let updatedCategories = [...selectedCategories];
@@ -53,12 +54,17 @@ export const CreateWorkout = () => {
     setSelectedCategories(updatedCategories);
   };
   const handleStartWorkout = (event: ClickEventType) => {
+    console.log("this date is selected: ", selectedDate);
     dispatch(initiatedWorkout(selectedCategories));
     navigate(`/${ROUTE_PATHS.ADD_EXERCISE}`);
   };
 
   const toggleModal = () => {
     setShowModal(!showModal);
+  };
+
+  const handleSelectedDate = (date: Date) => {
+    setSelectedDate(date);
   };
 
   return (
@@ -89,7 +95,12 @@ export const CreateWorkout = () => {
       </div>
       <PrimaryButton value="Start Workout" handleClick={handleStartWorkout} />
       <OutlineButton value="Start Workout" handleClick={toggleModal} />
-      {showModal ? <SelectDateModal closeModal={toggleModal} /> : null}
+      {showModal ? (
+        <SelectDateModal
+          closeModal={toggleModal}
+          passSelectedDate={handleSelectedDate}
+        />
+      ) : null}
     </div>
   );
 };

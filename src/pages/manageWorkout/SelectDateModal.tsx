@@ -2,35 +2,31 @@ import React, { useState, useEffect } from "react";
 import { colors } from "../../assets/colors";
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
 import { DateDisplay } from "../../components/DateDisplay";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import DatePicker, {
-  Calendar,
-  DayValue,
-} from "react-modern-calendar-datepicker";
+import { DatePicker } from "../../components/DatePicker";
+import { PrimaryButton } from "../../components/PrimaryButton";
 
 interface SelectDateModalProps {
   closeModal: () => void;
+  passSelectedDate: (date: Date) => void;
 }
 
 export const SelectDateModal: React.FC<SelectDateModalProps> = ({
   closeModal,
+  passSelectedDate,
 }) => {
-  const defaultValue = {
-    year: 2023,
-    month: 1,
-    day: 21,
-  };
-  const [day, setDay] = useState<DayValue>(defaultValue);
-  console.log("day", day);
+  const maxDate = new Date();
+  maxDate.setFullYear(new Date().getFullYear() + 1);
 
-  useEffect(() => {
-    return () => {
-      document.removeEventListener("click", closeModal);
-    };
-  }, []);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
+  const handleSelectedDate = (date: Date) => {
+    setSelectedDate(date);
+  };
+
+  const handleConfirm = (event: ClickEventType) => {
+    passSelectedDate(selectedDate);
+    closeModal();
+  };
 
   return (
     <div style={styles.root} onClick={closeModal}>
@@ -49,19 +45,13 @@ export const SelectDateModal: React.FC<SelectDateModalProps> = ({
           </div>
           <DateDisplay />
         </div>
-        <style>
-          {`.custom-calendar {
-        box-shadow: none;
-      }`}
-        </style>
 
-        <Calendar
-          value={day}
-          onChange={setDay}
-          colorPrimary={colors.primary}
-          calendarClassName="custom-calendar"
-          shouldHighlightWeekends
+        <DatePicker
+          minDate={new Date()}
+          maxDate={maxDate}
+          passSelectedDate={handleSelectedDate}
         />
+        <PrimaryButton value="Confirm" handleClick={handleConfirm} />
       </div>
     </div>
   );
