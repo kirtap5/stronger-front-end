@@ -1,9 +1,13 @@
 import React from "react";
+
+import { useNavigate } from "react-router-dom";
+
 import { CgChevronLeft } from "react-icons/cg";
 import { BsThreeDots } from "react-icons/bs";
 import { StyleType } from "../typescript/types/Types";
 import { colors } from "../assets/colors";
 import { DateDisplay } from "./DateDisplay";
+import { NONAME } from "dns";
 
 interface HeaderSectionProps {
   starter: string;
@@ -16,10 +20,15 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({
   highlight,
   ending,
 }) => {
+  let navigate = useNavigate();
+
+  console.log("first");
   return (
     <div style={styles.root}>
       <div style={styles.iconContainer}>
-        <CgChevronLeft size="40" />
+        <button style={styles.backButton} onClick={() => navigate(-1)}>
+          <CgChevronLeft size="40" />
+        </button>
         <BsThreeDots size="40" />
       </div>
       <div style={styles.contentContainer}>
@@ -49,5 +58,8 @@ const styles: StyleType = {
   },
   highlight: {
     color: colors.primary,
+  },
+  backButton: {
+    all: "unset",
   },
 };

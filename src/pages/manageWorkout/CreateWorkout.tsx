@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { colors } from "../../assets/colors";
 import { HeaderSection } from "../../components/HeaderSection";
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
@@ -28,6 +28,10 @@ const illustrations: any = {
   CHEST: chest,
   LEGS: legs,
 };
+
+const MuscleCardMemo = memo(MuscleCard);
+
+const HeaderSectionMemo = memo(HeaderSection);
 
 export const CreateWorkout = () => {
   const navigate = useNavigate();
@@ -72,7 +76,7 @@ export const CreateWorkout = () => {
       <h1 style={{ textTransform: "capitalize" }}>
         {categories[2].name.toLowerCase()}
       </h1>
-      <HeaderSection
+      <HeaderSectionMemo
         starter="What are"
         highlight="you"
         ending="training today?"
@@ -80,7 +84,7 @@ export const CreateWorkout = () => {
       <div style={styles.cardContainer}>
         {categories.map(({ id, name }) => {
           return (
-            <MuscleCard
+            <MuscleCardMemo
               key={id}
               path={illustrations[name]}
               caption={name.toLowerCase()}
