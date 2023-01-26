@@ -22,6 +22,7 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({
 }) => {
   let navigate = useNavigate();
 
+  console.log("first");
   return (
     <div style={styles.root}>
       <div style={styles.iconContainer}>

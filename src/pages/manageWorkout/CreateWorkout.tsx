@@ -1,3 +1,4 @@
+import { useState, memo } from "react";
 import { colors } from "../../assets/colors";
 import { HeaderSection } from "../../components/HeaderSection";
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
@@ -12,8 +13,9 @@ import { PrimaryButton } from "../../components/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "../../routes";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { initiatedWorkout } from "../../features/workout/workoutSlice";
 
 //TODO, fixa snyggare lösning för illustrations. Ha dom i databasen ksk?
 const illustrations: any = {
@@ -25,23 +27,43 @@ const illustrations: any = {
   LEGS: legs,
 };
 
+const MuscleCardMemo = memo(MuscleCard);
+
+const HeaderSectionMemo = memo(HeaderSection);
+
 export const CreateWorkout = () => {
   const navigate = useNavigate();
-
-  const handleStartWorkout = (event: ClickEventType) => {
-    navigate(`/${ROUTE_PATHS.ADD_EXERCISE}`);
-  };
-
   const categories = useSelector(
     (state: RootState) => state.workout.categories
   );
+  const activeCategories = useSelector(
+    (state: RootState) => state.workout.selectedCategories
+  );
+  const dispatch = useDispatch();
+
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  const handleSelectedCategory = (name: string) => {
+    let updatedCategories = [...selectedCategories];
+    updatedCategories.includes(name, 0)
+      ? (updatedCategories = updatedCategories.filter(
+          (category) => category !== name
+        ))
+      : updatedCategories.push(name);
+
+    setSelectedCategories(updatedCategories);
+  };
+  const handleStartWorkout = (event: ClickEventType) => {
+    dispatch(initiatedWorkout(selectedCategories));
+    navigate(`/${ROUTE_PATHS.ADD_EXERCISE}`);
+  };
 
   return (
     <div style={styles.root}>
       <h1 style={{ textTransform: "capitalize" }}>
         {categories[2].name.toLowerCase()}
       </h1>
-      <HeaderSection
+      <HeaderSectionMemo
         starter="What are"
         highlight="you"
         ending="training today?"
@@ -49,11 +71,15 @@ export const CreateWorkout = () => {
       <div style={styles.cardContainer}>
         {categories.map(({ id, name }) => {
           return (
-            <MuscleCard
+            <MuscleCardMemo
               key={id}
               path={illustrations[name]}
               caption={name.toLowerCase()}
               highlightColor={colors.secondary}
+              handleSelect={handleSelectedCategory}
+              initState={
+                activeCategories.includes(name.toLowerCase()) ? true : false
+              }
             />
           );
         })}

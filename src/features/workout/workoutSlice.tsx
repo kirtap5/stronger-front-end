@@ -8,6 +8,7 @@ interface WorkoutState {
     name: string;
     exercises: { id: number; name: string }[];
   }[];
+  selectedCategories: string[];
 }
 
 // Define the initial state using that type
@@ -17,10 +18,12 @@ const workoutSlice = createSlice({
   name: "workout",
   initialState,
   reducers: {
-    selectedCategories(state, action) {},
+    initiatedWorkout(state, action) {
+      state.selectedCategories = action.payload;
+    },
   },
 });
 
-export const { selectedCategories } = workoutSlice.actions;
+export const { initiatedWorkout } = workoutSlice.actions;
 
 export default workoutSlice.reducer;
