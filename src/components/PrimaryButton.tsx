@@ -40,5 +40,6 @@ const styles: StyleType = {
     alignItems: "center",
     margin: "auto",
     backgroundColor: colors.primary,
+    marginBottom: "100px",
   },
 };

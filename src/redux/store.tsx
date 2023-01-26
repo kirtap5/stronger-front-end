@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { TypeOfExpression } from "typescript";
 import workoutReducer from "../features/workout/workoutSlice";
 
 const store = configureStore({
