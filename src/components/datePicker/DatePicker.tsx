@@ -1,38 +1,23 @@
 import React, { useState } from "react";
 
-import { ClickEventType, StyleType } from "../typescript/types/Types";
+import { ClickEventType, StyleType } from "../../typescript/types/Types";
 import { CgChevronLeft, CgChevronRight } from "react-icons/cg";
-import { dayNames, monthNames } from "../assets/consts";
-import { colors } from "../assets/colors";
+import { dayNames, monthNames } from "../../assets/consts";
+import { colors } from "../../assets/colors";
+import {
+  getNumberOfDaysInMonth,
+  getSortedDays,
+  getTimeFromState,
+  getDaysInMonth,
+  dateOutOfRange,
+  checkDateMatch,
+} from "./DatePickerService";
 
 interface DatePickerProps {
   minDate: Date;
   maxDate: Date;
   passSelectedDate: (date: Date) => void;
 }
-
-const getNumberOfDaysInMonth = (year: number, month: number) => {
-  return new Date(year, month + 1, 0).getDate();
-};
-
-const getSortedDays = (year: number, month: number) => {
-  const dayIndex = new Date(year, month).getDay();
-  const firstHalf = dayNames.slice(dayIndex);
-  return [...firstHalf, ...dayNames.slice(0, dayIndex)];
-};
-
-const range = (start: number, end: number) => {
-  const length = Math.abs((end - start) / 1);
-  const { result } = Array.from({ length }).reduce(
-    ({ result, current }) => ({
-      result: [...result, current],
-      current: current + 1,
-    }),
-    { result: [], current: start }
-  );
-
-  return result;
-};
 
 export const DatePicker: React.FC<DatePickerProps> = ({
   minDate,
@@ -44,23 +29,35 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  const nextMonth = () => {
+  const isMaxMonth =
+    maxDate.getTime() <
+    getTimeFromState(
+      getNumberOfDaysInMonth(currentYear, currentMonth),
+      currentYear,
+      currentMonth
+    );
+  const isMinMonth =
+    minDate?.getTime() > getTimeFromState(1, currentYear, currentMonth);
+
+  const nextMonth = React.useCallback(() => {
     if (currentMonth < 11) {
       setCurrentMonth((prev) => prev + 1);
     } else {
       setCurrentMonth(0);
       setCurrentYear((prev) => prev + 1);
     }
-  };
+  }, [currentMonth]);
 
-  const prevMonth = () => {
+  const prevMonth = React.useCallback(() => {
+    console.log("prevMonth running");
+
     if (currentMonth > 0) {
       setCurrentMonth((prev) => prev - 1);
     } else {
       setCurrentMonth(11);
       setCurrentYear((prev) => prev - 1);
     }
-  };
+  }, [currentMonth]);
 
   const handleSelection = (event: ClickEventType) => {
     // event delegation
@@ -72,9 +69,17 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     }
   };
 
-  const getTimeFromState = (_day: number) => {
-    return new Date(currentYear, currentMonth, _day).getTime();
+  const getDateNodeStyle = (day: number) => {
+    let nodeStyle: React.CSSProperties = {};
+
+    if (dateOutOfRange(minDate, maxDate, currentYear, currentMonth, day)) {
+      nodeStyle = styles.disabledDate;
+    } else if (checkDateMatch(selectedDate, currentYear, currentMonth, day)) {
+      nodeStyle = styles.active;
+    }
+    return { ...styles.dayNode, ...nodeStyle };
   };
+
   return (
     <>
       <div style={styles.pickerWrapper}>
@@ -82,7 +87,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
           <button
             onClick={prevMonth}
             style={styles.chevronButton}
-            disabled={minDate?.getTime() > getTimeFromState(1)}
+            disabled={isMinMonth}
           >
             <CgChevronLeft size="20" style={styles.chevronIcon} />
           </button>
@@ -93,46 +98,35 @@ export const DatePicker: React.FC<DatePickerProps> = ({
           <button
             onClick={nextMonth}
             style={styles.chevronButton}
-            disabled={
-              maxDate?.getTime() <
-              getTimeFromState(
-                getNumberOfDaysInMonth(currentYear, currentMonth)
-              )
-            }
+            disabled={isMaxMonth}
           >
             <CgChevronRight size="20" style={styles.chevronIcon} />
           </button>
         </div>
         <div style={styles.body}>
           <div style={styles.sevenColGrid}>
-            {getSortedDays(currentYear, currentMonth).map((day) => (
+            {getSortedDays(currentYear, currentMonth, dayNames).map((day) => (
               <p key={day} style={styles.dayLabel}>
                 {day}
               </p>
             ))}
           </div>
           <div style={styles.sevenColGrid} onClick={handleSelection}>
-            {range(
+            {getDaysInMonth(
               1,
               getNumberOfDaysInMonth(currentYear, currentMonth) + 1
             ).map((day) => (
               <button
                 key={day}
                 id={day}
-                disabled={
-                  minDate?.getTime() > getTimeFromState(day + 1) ||
-                  maxDate?.getTime() < getTimeFromState(day)
-                }
-                style={
-                  minDate?.getTime() > getTimeFromState(day + 1) ||
-                  maxDate?.getTime() < getTimeFromState(day)
-                    ? { ...styles.dayNode, ...styles.disabledDate }
-                    : selectedDate.getFullYear() === currentYear &&
-                      selectedDate.getMonth() === currentMonth &&
-                      selectedDate.getDate() === day
-                    ? { ...styles.dayNode, ...styles.active }
-                    : { ...styles.dayNode }
-                }
+                disabled={dateOutOfRange(
+                  minDate,
+                  maxDate,
+                  currentYear,
+                  currentMonth,
+                  day
+                )}
+                style={getDateNodeStyle(day)}
               >
                 {day}
               </button>
