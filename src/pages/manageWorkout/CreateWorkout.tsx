@@ -43,19 +43,23 @@ export const CreateWorkout = () => {
   );
   const dispatch = useDispatch();
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    ...activeCategories,
+  ]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  const handleSelectedCategory = (name: string) => {
-    let updatedCategories = [...selectedCategories];
-    updatedCategories.includes(name, 0)
-      ? (updatedCategories = updatedCategories.filter(
-          (category) => category !== name
-        ))
-      : updatedCategories.push(name);
+  const handleSelectedCategory = (event: ClickEventType) => {
+    // event delegation
+    const category = (event.target as HTMLElement).id.toLowerCase();
 
-    setSelectedCategories(updatedCategories);
+    if (category) {
+      selectedCategories.includes(category)
+        ? setSelectedCategories(
+            selectedCategories.filter((unique) => unique !== category)
+          )
+        : setSelectedCategories([...selectedCategories, category]);
+    }
   };
   const handleStartWorkout = (event: ClickEventType) => {
     console.log("this date is selected: ", selectedDate);
@@ -73,25 +77,23 @@ export const CreateWorkout = () => {
 
   return (
     <div style={styles.root}>
-      <h1 style={{ textTransform: "capitalize" }}>
-        {categories[2].name.toLowerCase()}
-      </h1>
       <HeaderSectionMemo
         starter="What are"
         highlight="you"
         ending="training today?"
       />
-      <div style={styles.cardContainer}>
+      <div style={styles.cardContainer} onClick={handleSelectedCategory}>
         {categories.map(({ id, name }) => {
           return (
             <MuscleCardMemo
               key={id}
+              id={name}
               path={illustrations[name]}
               caption={name.toLowerCase()}
               highlightColor={colors.secondary}
-              handleSelect={handleSelectedCategory}
-              initState={
-                activeCategories.includes(name.toLowerCase()) ? true : false
+              // handleSelect={handleSelectedCategory}
+              isActive={
+                selectedCategories.includes(name.toLowerCase()) ? true : false
               }
             />
           );
