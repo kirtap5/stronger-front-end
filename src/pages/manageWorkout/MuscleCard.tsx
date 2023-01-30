@@ -1,41 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 import { colors } from "../../assets/colors";
-import { ClickEventType, StyleType } from "../../typescript/types/Types";
+import { StyleType } from "../../typescript/types/Types";
 import { IoIosCheckmark } from "react-icons/io";
-import { useSelector } from "react-redux";
 
 interface MuscleCardProps {
+  id: string;
   key: Number;
   highlightColor: string;
   caption: string;
   path: string;
-  handleSelect: (name: string) => void;
-  initState: Boolean;
+  isActive: Boolean;
 }
 
 export const MuscleCard: React.FC<MuscleCardProps> = ({
+  id,
   path,
   caption,
   highlightColor,
-  handleSelect,
-  initState,
+  isActive,
 }) => {
-  const [isActive, setIsActive] = useState(initState);
-
-  console.log("renderrrr");
   return (
     <div
+      id={id}
       style={{
         ...styles.root,
         border: `1px solid ${isActive ? highlightColor : colors.black}`,
       }}
-      onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        setIsActive(!isActive);
-        handleSelect(caption);
-      }}
     >
-      <img src={path} alt="img not found" style={styles.illustration}></img>
+      <img
+        id={id}
+        src={path}
+        alt="img not found"
+        style={styles.illustration}
+      ></img>
       <h3
+        id={id}
         style={{
           ...styles.caption,
           color: isActive ? highlightColor : colors.black,
