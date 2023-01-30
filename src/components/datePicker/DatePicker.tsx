@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
 import { CgChevronLeft, CgChevronRight } from "react-icons/cg";
@@ -29,17 +29,22 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  const isMaxMonth =
-    maxDate.getTime() <
-    getTimeFromState(
-      getNumberOfDaysInMonth(currentYear, currentMonth),
-      currentYear,
-      currentMonth
-    );
-  const isMinMonth =
-    minDate?.getTime() > getTimeFromState(1, currentYear, currentMonth);
+  const isMaxMonth = useMemo(
+    () =>
+      maxDate.getTime() <
+      getTimeFromState(
+        getNumberOfDaysInMonth(currentYear, currentMonth),
+        currentYear,
+        currentMonth
+      ),
+    [currentMonth, currentYear]
+  );
+  const isMinMonth = useMemo(
+    () => minDate?.getTime() > getTimeFromState(1, currentYear, currentMonth),
+    [[currentMonth, currentYear]]
+  );
 
-  const nextMonth = React.useCallback(() => {
+  const nextMonth = useCallback(() => {
     if (currentMonth < 11) {
       setCurrentMonth((prev) => prev + 1);
     } else {
@@ -48,7 +53,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     }
   }, [currentMonth]);
 
-  const prevMonth = React.useCallback(() => {
+  const prevMonth = useCallback(() => {
     console.log("prevMonth running");
 
     if (currentMonth > 0) {
@@ -59,15 +64,18 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     }
   }, [currentMonth]);
 
-  const handleSelection = (event: ClickEventType) => {
-    // event delegation
-    const day = (event.target as HTMLButtonElement).id;
-    if (day) {
-      const newDate = new Date(currentYear, currentMonth, parseInt(day));
-      setSelectedDate(newDate);
-      passSelectedDate(newDate);
-    }
-  };
+  const handleSelection = useCallback(
+    (event: ClickEventType) => {
+      // event delegation
+      const day = (event.target as HTMLButtonElement).id;
+      if (day) {
+        const newDate = new Date(currentYear, currentMonth, parseInt(day));
+        setSelectedDate(newDate);
+        passSelectedDate(newDate);
+      }
+    },
+    [currentMonth, currentMonth]
+  );
 
   const getDateNodeStyle = (day: number) => {
     let nodeStyle: React.CSSProperties = {};
