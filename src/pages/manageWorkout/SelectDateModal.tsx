@@ -1,20 +1,27 @@
+import React, { useState, useEffect } from "react";
 import { colors } from "../../assets/colors";
-import { DateDisplay } from "../../components/DateDisplay";
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
-import { SelectDropdown } from "../../components/SelectDropdown";
-import { RepSelection } from "./RepSelection";
-import { WeightSelection } from "./WeightSelection";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { DateDisplay } from "../../components/DateDisplay";
+import { DatePicker } from "../../components/datePicker/DatePicker";
 import { PrimaryButton } from "../../components/PrimaryButton";
+import { getOneYearFromNow } from "../../components/datePicker/DatePickerService";
 
-interface ExerciseInputModalProps {
+interface SelectDateModalProps {
   closeModal: () => void;
+  passSelectedDate: (date: Date) => void;
 }
-export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
+
+export const SelectDateModal: React.FC<SelectDateModalProps> = ({
   closeModal,
+  passSelectedDate,
 }) => {
-  const exercises = useSelector((state: RootState) => state.workout.categories);
+  const maxDate = getOneYearFromNow();
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleConfirm = (event: ClickEventType) => {
+    passSelectedDate(selectedDate);
+    closeModal();
+  };
 
   return (
     <div style={styles.root} onClick={closeModal}>
@@ -24,20 +31,23 @@ export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
       >
         <div style={styles.header}>
           <div style={styles.captionContainer}>
-            <div>
-              <h2 style={styles.caption}>Chest</h2>
-              <b style={styles.highlight}>and</b>
-            </div>
-            <h2 style={styles.caption}>Triceps</h2>
+            <h2 style={styles.caption}>
+              When is
+              <span style={styles.highlight}>your</span>
+              <br />
+              Workout ?
+            </h2>
           </div>
           <DateDisplay />
         </div>
-        <SelectDropdown />
-        <RepSelection />
-        <WeightSelection />
 
+        <DatePicker
+          minDate={new Date()}
+          maxDate={maxDate}
+          passSelectedDate={(date) => setSelectedDate(date)}
+        />
         <div style={styles.buttonContainer}>
-          <PrimaryButton value="Confirm" handleClick={closeModal} />
+          <PrimaryButton value="Confirm" handleClick={handleConfirm} />
         </div>
       </div>
     </div>
@@ -58,21 +68,21 @@ const styles: StyleType = {
   },
   container: {
     width: "80%",
-    height: "90%",
+    height: "80%",
     backgroundColor: colors.white,
     borderRadius: "20px",
     margin: "auto",
     padding: "20px",
+    position: "relative",
   },
   header: {
-    margin: "auto",
-    marginTop: "30px",
+    margin: " 40px auto",
     display: "flex",
     justifyContent: "space-around",
   },
 
   captionContainer: {
-    maxWidth: "40%",
+    maxWidth: "60%",
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",

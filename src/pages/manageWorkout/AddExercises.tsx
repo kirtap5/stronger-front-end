@@ -16,7 +16,7 @@ export const AddExercises = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const toggleModal = (event: ClickEventType) => {
+  const toggleModal = () => {
     setShowModal(!showModal);
   };
   return (

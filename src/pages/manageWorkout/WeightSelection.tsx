@@ -6,6 +6,7 @@ export const WeightSelection = () => {
     <div style={styles.root}>
       <p style={styles.header}>Select the weight</p>
       <input type="number" inputMode="decimal" style={styles.weightInput} />
+      <b style={styles.text}>kg</b>
     </div>
   );
 };
@@ -14,10 +15,18 @@ const styles: StyleType = {
   root: {},
   header: { fontWeight: "600" },
   weightInput: {
-    fontSize: "40px",
-    width: "80%",
-
+    all: "unset",
+    width: "40px",
+    height: "50px",
+    padding: "0 10px",
+    fontSize: "18px",
+    fontWeight: "500",
+    backgroundColor: colors.lightGrey,
+    textAlign: "center",
     borderRadius: "10px",
-    border: `1px solid ${colors.lightGrey}`,
+    marginRight: "10px",
+  },
+  text: {
+    fontWeight: "500",
   },
 };
