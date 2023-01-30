@@ -15,11 +15,6 @@ export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
   closeModal,
 }) => {
   const exercises = useSelector((state: RootState) => state.workout.categories);
-  console.log(exercises);
-
-  const handleConfirm = () => {
-    closeModal();
-  };
 
   return (
     <div style={styles.root} onClick={closeModal}>
@@ -42,7 +37,7 @@ export const ExersiceInputModal: React.FC<ExerciseInputModalProps> = ({
         <WeightSelection />
 
         <div style={styles.buttonContainer}>
-          <PrimaryButton value="Confirm" handleClick={handleConfirm} />
+          <PrimaryButton value="Confirm" handleClick={closeModal} />
         </div>
       </div>
     </div>

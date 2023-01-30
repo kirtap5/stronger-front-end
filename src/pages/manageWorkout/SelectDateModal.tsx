@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { colors } from "../../assets/colors";
 import { ClickEventType, StyleType } from "../../typescript/types/Types";
 import { DateDisplay } from "../../components/DateDisplay";
-import { DatePicker } from "../../components/DatePicker";
+import { DatePicker } from "../../components/datePicker/DatePicker";
 import { PrimaryButton } from "../../components/PrimaryButton";
+import { getOneYearFromNow } from "../../components/datePicker/DatePickerService";
 
 interface SelectDateModalProps {
   closeModal: () => void;
@@ -14,14 +15,8 @@ export const SelectDateModal: React.FC<SelectDateModalProps> = ({
   closeModal,
   passSelectedDate,
 }) => {
-  const maxDate = new Date();
-  maxDate.setFullYear(new Date().getFullYear() + 1);
-
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-
-  const handleSelectedDate = (date: Date) => {
-    setSelectedDate(date);
-  };
+  const maxDate = getOneYearFromNow();
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleConfirm = (event: ClickEventType) => {
     passSelectedDate(selectedDate);
@@ -49,7 +44,7 @@ export const SelectDateModal: React.FC<SelectDateModalProps> = ({
         <DatePicker
           minDate={new Date()}
           maxDate={maxDate}
-          passSelectedDate={handleSelectedDate}
+          passSelectedDate={(date) => setSelectedDate(date)}
         />
         <div style={styles.buttonContainer}>
           <PrimaryButton value="Confirm" handleClick={handleConfirm} />
